@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.js"></script>
+<body>
+    <div class="container">
+        <h1>Bootstrap Table</h1>
+
+        <p>A table with third party integration extension Filter control extension Data export</a> pour exporter</p>
+        <div id="toolbar">
+            <select class="form-control">
+                <option value="">Export Basic</option>
+                <option value="all">Export All</option>
+                <option value="selected">Export Selected</option>
+            </select>
+        </div>
+        <table id="table" data-toggle="table" data-search="true" data-filter-control="true" data-show-export="true" data-click-to-select="true"
+            data-toolbar="#toolbar" class="table-responsive" data-detail-formatter="detailFormatter" data-sort-name="rank" data-sort-order="asc">
+            <thead>
+                {% if all == 'True'%}
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="rank" data-filter-control="input" data-sortable="true">Rank</th>
+                        <th data-field="branch" data-filter-control="select" data-sortable="true">Branch</th>
+                        <th data-field="usn" data-filter-control="input" data-sortable="true">USN</th>
+                        <th data-field="name" data-filter-control="input" data-sortable="true" data-formatter="LinkFormatter">Name</th>
+                        <th data-field="sgpa" data-filter-control="select" data-sortable="true">SGPA</th>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="rank" data-filter-control="input" data-sortable="true">Rank</th>
+                        <th data-field="usn" data-filter-control="input" data-sortable="true">USN</th>
+                        <th data-field="name" data-filter-control="input" data-sortable="true" data-formatter="LinkFormatter">Name</th>
+                        <th data-field="sgpa" data-filter-control="select" data-sortable="true">SGPA</th>
+                    </tr>
+                {%endif%}
+            </thead>
+            <tbody>
+                {% if all == 'False' %}
+                    {% for key1,value1 in results.items %}
+                        <tr>
+                            <td></td>
+                            <td>{{value1.ClassRank}}</td>
+                            <td>{{key1}}</td>
+                            <td>{{value1.Name}}</td>
+                            <td>{{value1.CGPA}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for key,value in results.items %}
+                        {% for key1,value1 in value.items %}
+                            <tr>
+                                <td></td>
+                                <td>{{value1.SemRank}}</td>
+                                <td>{{key|upper}}</td>
+                                <td>{{key1}}</td>
+                                <td>{{value1.Name}}</td>
+                                <td>{{value1.CGPA}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}               
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    //exporte les données sélectionnées
+    var $table = $('#table');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+
+    var trBoldBlue = $("table");
+    $(trBoldBlue).on("click", "tr", function () {
+        $(this).toggleClass("bold-blue");
+    });
+
+    function LinkFormatter(value, row, index) {
+        return "<a href='/student/"+row.usn+"'>"+value+"</a>";
+      }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
+<script src="https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+</html>

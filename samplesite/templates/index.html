@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <div class="h1 text-center">Extract VTU Results</div>
+        <table class="table mt-4 table-bordered table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="text-center">Enter Year</th>
+                    <th class="text-center">Enter Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label for="year"></label>
+                            <select class="form-control" name="year" id="select-year">
+                                <option>Year:</option>
+                                <option>17</option>
+                                <option>16</option>
+                                <option>15</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label for="type"></label>
+                            <select class="form-control" name="type" id="select-type">
+                                <option>Type:</option>
+                                <option>Reval</option>
+                                <option>Regular</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <button id="fetch" type="button" class="btn btn-primary">Fetch Result</button>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        $("#fetch").on("click", function () {
+            var year=$("#select-year").val()
+            var types=$("#select-type").val()
+            console.log(year,types)   
+            $.ajax({
+                type: "GET",
+                url: "/extract/",
+                data:{year:year,type:types}
+            })     
+        })
+    </script>
+</body>
+
+</html>
