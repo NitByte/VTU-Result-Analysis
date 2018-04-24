@@ -53,7 +53,7 @@ ROOT_URLCONF = 'samplesite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["/media/nithin/E:/Project/djangosam/samplesite/templates"],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

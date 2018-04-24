@@ -1,7 +1,7 @@
 from django.shortcuts import HttpResponse,render
 import json
 import random
-with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new2015batch.json","r") as fp:
+with open("templates/new2015batch.json","r") as fp:
     res=json.load(fp)
 
 def index(request):
@@ -40,7 +40,7 @@ def json_display(request):
     return render(request,"data.json")
 
 def display_reval(request,usn):
-    with open("/media/nithin/E:/Project/djangosam/samplesite/templates/reval2015batch.json","r") as fp:
+    with open("templates/reval2015batch.json","r") as fp:
         reval=json.load(fp)
     try:
         branch=usn[5:7]
@@ -61,7 +61,7 @@ def display_reval(request,usn):
         return render(request,'error.html')
 
 def display_allreval(request,branch):
-    with open("/media/nithin/E:/Project/djangosam/samplesite/templates/reval2015batch.json","r") as fp:
+    with open("templates/reval2015batch.json","r") as fp:
         reval=json.load(fp)
     response=res
     usns=[] 

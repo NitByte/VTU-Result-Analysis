@@ -153,14 +153,14 @@ def fetch_result(request):
         for branch in result:
             for usn in result[branch]:
                 result[branch][usn]["Rank"]=all_rank[usn]
-        with open("/media/nithin/E:/Project/djangosam/samplesite/templates/20"+year+"batch.json","w+") as fp:
+        with open("templates/20"+year+"batch.json","w+") as fp:
             json.dump(result,fp)
 
     def update():
-        with open("/media/nithin/E:/Project/djangosam/samplesite/templates/20"+year+"batch.json", "r") as fp:
+        with open("templates/20"+year+"batch.json", "r") as fp:
             res = json.load(fp)
 
-        with open("/media/nithin/E:/Project/djangosam/samplesite/templates/reval20"+year+"batch.json", "r") as rp:
+        with open("templates/reval20"+year+"batch.json", "r") as rp:
             reval = json.load(rp)
 
         for branch in reval:
@@ -199,11 +199,11 @@ def fetch_result(request):
                         res[branch][usn]["Subjects"][sub]["OldTotal"]="N/A"
 
 
-        with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new20"+year+"batch.json","w+") as wp:
+        with open("templates/new20"+year+"batch.json","w+") as wp:
             json.dump(res,wp)
 
     def reval():
-        with open("/media/nithin/E:/Project/djangosam/samplesite/templates/20"+year+"batch.json") as js:
+        with open("templates/20"+year+"batch.json") as js:
             res=json.load(js)
 
         sub_reval={}
@@ -249,7 +249,7 @@ def fetch_result(request):
                         sub_reval[branch][usns]["Subjects"][row[0]]["MarksIncreased"]=str(row[6])
                 except:
                     pass
-        with open("/media/nithin/E:/Project/djangosam/samplesite/templates/reval20"+year+"batch.json",'w+') as fp:
+        with open("templates/reval20"+year+"batch.json",'w+') as fp:
             json.dump(sub_reval,fp)
     if types=='Regular':
         regular()
