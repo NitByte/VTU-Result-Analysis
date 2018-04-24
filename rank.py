@@ -1,4 +1,3 @@
-
 import json
 
 with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new2015batch.json","r") as fs:
@@ -31,5 +30,3 @@ for branch in res:
         res[branch][usn]["SemRank"]=str(sem_ranks[usn])
 with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new2015batch.json","w") as kp:
     json.dump(res,kp)
-
-        
