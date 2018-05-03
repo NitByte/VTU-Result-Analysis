@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.js"></script>
+
+<body>
+    <div class="container">
+        <h1>Bootstrap Table</h1>
+
+        <p>A table with third party integration extension Filter control extension Data export</a> pour exporter</p>
+        {% for subcode,namedict in gradestats.items %}
+        <br>
+        <br>
+        <div>
+            <b>{{subcode}}</b>
+        </div>
+        <br>
+        <br>
+        <table id="table" data-toggle="table" class="table-responsive" data-sort-name="Name" data-sort-order="asc">
+            <thead>
+                <tr>
+                    <th data-field="Name" data-sortable="true">Name</th>
+                    <th data-field="Internal"  data-sortable="true">Internal</th>
+                    <th data-field="External"  data-sortable="true">External</th>
+                    <th data-field="Total"  data-sortable="true">Total</th>
+                    <th data-field="GradePoints"  data-sortable="true">Grade Points</th>
+                    <th data-field="GradeLetter"  data-sortable="true">Grade Letter</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for name,subdict in namedict.items %}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{subdict.Internal}}</td>
+                    <td>{{subdict.External}}</td>
+                    <td>{{subdict.Total}}</td>
+                    <td>{{subdict.GradePoints}}</td>
+                    <td>{{subdict.GradeLetter}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br> {%endfor%}
+    </div>
+</body>
+<script>
+    //exporte les données sélectionnées
+    var $table = $('#table');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+
+    var trBoldBlue = $("table");
+    $(trBoldBlue).on("click", "tr", function () {
+        $(this).toggleClass("bold-blue");
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
+<script src="https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+
+</html>
