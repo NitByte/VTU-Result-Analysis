@@ -1,5 +1,8 @@
 import json
 import pandas as pd
+import statistics
+from tabulate import tabulate
+import operator
 from django.shortcuts import HttpResponse,render
 
 with open("templates/2015batch.json") as fp:
@@ -84,4 +87,61 @@ def classStats(request):
         sub_stats["Above90"][sub]=sub_dict[sub].count('S+')     
     # print(sub_stats)
     return render(request,"classstats.html",{'sub_stats':sub_stats,'subjects':subjects})
+
+def branchStats(request):
+    branchtuple=[]
+    tableDict={}
+    rankdict={}
+    ranks={}
+    sgpas=[]
+    result=[]
+    tableDict["CGPAS"]={}
+    tableDict["Fails"]={}
+    for branch in res:
+        sgpas=[]
+        result=[]
+        for usn in res[branch]:
+            sgpas.append(res[branch][usn]["CGPA"])
+            for sub in res[branch][usn]["Subjects"]:
+                if res[branch][usn]["Subjects"][sub]["GradeLetter"]=='F':
+                    result.append('F')
+                    break
+        tableDict["CGPAS"][branch]=sgpas
+        tableDict["Fails"][branch]=result
+    branchStats={}
+    branchStats["No Of Students"]={}
+    branchStats["Max SGPA"]={}
+    branchStats["Min SGPA"]={}
+    branchStats["No Of Students Failed"]={}
+    branchStats["Above 9 SGPA"]={}
+    branchStats["Below 4 SGPA"]={}
+    branchStats["Pass%"]={}
+    branchStats["Average SGPA"]={}
+    branchStats["Variance"]={}
+    branchStats["Branch Rank"]={}
+    for branch in res:
+        branchtuple.append(branch)
+        totalStuds=len(res[branch])
+        branchStats["No Of Students"][branch]=totalStuds
+        branchStats["Max SGPA"][branch]=max(tableDict["CGPAS"][branch])
+        branchStats["Min SGPA"][branch]=min(tableDict["CGPAS"][branch])
+        branchStats["Variance"][branch]=round(statistics.variance(map(float,tableDict["CGPAS"][branch])),2)
+        fail=len(tableDict["Fails"][branch])
+        branchStats["No Of Students Failed"][branch]=fail
+        avgsgpa=round(statistics.mean(map(float,tableDict["CGPAS"][branch])),2)
+        branchStats["Average SGPA"][branch]=avgsgpa
+        ranks[branch]=avgsgpa
+        branchStats["Above 9 SGPA"][branch]=len([x for x in tableDict["CGPAS"][branch] if float(x) >=9.0])
+        branchStats["Below 4 SGPA"][branch]=len([x for x in tableDict["CGPAS"][branch] if float(x) <=4.0])
+        branchStats["Pass%"][branch]=round(((totalStuds-fail)/totalStuds)*100,2)
+    ranktuple=sorted(ranks.items(),key=operator.itemgetter(1),reverse=True)
+    print(ranktuple)
+    for rank,tup in enumerate(ranktuple):
+        rankdict[tup[0]]=rank+1
+    for branch in branchtuple:
+        branchStats["Branch Rank"][branch]=rankdict[branch]
+    # df=pd.DataFrame(branchStats).transpose()
+    # print(tabulate(df,headers=list(df.columns), numalign="left", tablefmt="fancy_grid"))
+    print(rankdict)
+    return render(request,'branchstats.html',{"branchStats":branchStats})
 

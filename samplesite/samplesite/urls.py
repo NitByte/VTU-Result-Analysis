@@ -18,7 +18,7 @@ from django.urls import path
 from django.conf.urls import url
 from samplesite.views import hello_world,random_number,index,json_display,result,class_results,display_reval,display_allreval,after_reval
 from samplesite.extraction import fetch_result
-from samplesite.stats import studGrade,classStats
+from samplesite.stats import studGrade,classStats,branchStats
 from django.conf.urls import include
 
 urlpatterns = [
@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^classreval/(\w+)$',display_allreval),
     url(r'^stats/studgrade$',studGrade),
     url(r'^stats/classstats$',classStats),
+    url(r'^stats/branchstats$',branchStats),
     path('json/',json_display)
 ]
