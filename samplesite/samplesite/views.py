@@ -1,25 +1,36 @@
 from django.shortcuts import HttpResponse,render
 import json
 import random
-with open("templates/new2015batch.json","r") as fp:
-    res=json.load(fp)
 
 def index(request):
     return render(request,"index.html")
 
+def api(request):
+    return render(request,"apipage.html")
+
+def stats(request):
+    return render(request,"statspage.html")
+
+def search(request):
+    return render(request,"search.html")
+
 def home(request):
     return render(request,"home.html")
 
-def navbar(request):
-    return render(request,"navbar.html")
-
 def class_results(request,branch):
+    year=request.GET["year"]
+    print(year)
+    with open("templates/new20"+year+"batch.json","r") as fp:
+        res=json.load(fp)
     if branch=='all':
         return render(request,'table.html',{'results':res,'all':'True'})
     else:
         return render(request,'table.html',{'results':res[branch],'all':'False'})
 
 def result(request,usn):
+    year=usn[3:5]
+    with open("templates/new20"+year+"batch.json","r") as fp:
+        res=json.load(fp)
     branch=usn[5:7]
     usn_dict=res[branch][usn]
     sub_dict={}
@@ -37,16 +48,19 @@ def hello_world(request):
 def root_page(request):
     return HttpResponse("Welcome")
 
+
 def random_number(request,max_rand=100):
     random_num=random.randrange(0,int(max_rand))
     msg="Random number between 0 and "+max_rand+" is "+str(random_num)
     return HttpResponse(msg)
 
 def json_display(request):
-    return render(request,"new2015batch.json")
+    year=request.GET["year"]
+    return render(request,"new20"+year+"batch.json")
 
 def display_reval(request,usn):
-    with open("templates/reval2015batch.json","r") as fp:
+    year=usn[3:5]
+    with open("templates/reval20"+year+"batch.json","r") as fp:
         reval=json.load(fp)
     try:
         branch=usn[5:7]
@@ -67,9 +81,11 @@ def display_reval(request,usn):
         return render(request,'error.html')
 
 def display_allreval(request,branch):
-    with open("templates/reval2015batch.json","r") as fp:
+    year=request.GET["year"]
+    with open("templates/new20"+year+"batch.json","r") as fp:
+        response=json.load(fp)
+    with open("templates/reval20"+year+"batch.json","r") as fp:
         reval=json.load(fp)
-    response=res
     usns=[] 
     for b in response:
         for usn in reval[b]:
@@ -85,6 +101,9 @@ def display_allreval(request,branch):
         return render(request,'allreval.html',{'results':response[branch],'all':'False','usnlist':usns})
 
 def after_reval(request,usn):
+    year=usn[3:5]
+    with open("templates/new20"+year+"batch.json","r") as fp:
+        res=json.load(fp)
     branch=usn[5:7]
     usn_dict=res[branch][usn]
     sub_dict={}

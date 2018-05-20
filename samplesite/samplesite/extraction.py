@@ -254,7 +254,7 @@ def fetch_result(request):
     if types=='Regular':
         regular()
     else:
-        # reval()
+        reval()
         update()
 
     return HttpResponse("Fetch Complete")

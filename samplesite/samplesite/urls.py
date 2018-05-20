@@ -16,18 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from samplesite.views import hello_world,random_number,index,json_display,result,class_results,display_reval,display_allreval,after_reval,home,navbar
+from samplesite.views import hello_world,random_number,search,stats,index,json_display,result,class_results,display_reval,display_allreval,after_reval,home,api
 from samplesite.extraction import fetch_result
 from samplesite.stats import studGrade,classStats,branchStats
 from django.conf.urls import include
 
 urlpatterns = [
-    path('',navbar),
+    path('',home),
     path('admin/', admin.site.urls),
     path('extract/',fetch_result),
     url(r'^getresults/$',index),
-    url(r'^home/$',home),
     url(r'^classresults/(\w+)$',class_results),
+    url(r'^statspage/$',stats),
     url(r'^student/(\w+)$',result),
     url(r'^student/(\w+)/new$',after_reval),
     url(r'^reval/(\w+)$',display_reval),
@@ -35,5 +35,7 @@ urlpatterns = [
     url(r'^stats/studgrade$',studGrade),
     url(r'^stats/classstats$',classStats),
     url(r'^stats/branchstats$',branchStats),
+    url(r'^api/$',api),
+    url(r'^searchpage/$',search),
     path('json/',json_display)
 ]

@@ -5,25 +5,37 @@ from tabulate import tabulate
 import operator
 from django.shortcuts import HttpResponse,render
 
-with open("templates/2015batch.json") as fp:
-    res=json.load(fp)
+# with open("templates/2015batch.json") as fp:
+#     res=json.load(fp)
+# branch_name=res["cs"]
+# subjects={}
 
-branch_name=res["cs"]
-subjects={}
-
-for usn in branch_name:
-    for subs in branch_name[usn]["Subjects"]:
-        if subs not in subjects:
-            subjects[subs]=branch_name[usn]["Subjects"][subs]["SubjectName"]
+# for usn in branch_name:
+#     for subs in branch_name[usn]["Subjects"]:
+#         if subs not in subjects:
+#             subjects[subs]=branch_name[usn]["Subjects"][subs]["SubjectName"]
 
 def studGrade(request):
+    branch=request.GET["branch"]
+    year=request.GET["year"]
+    grade=request.GET["grade"]
+    print(grade)
+    with open("templates/20"+year+"batch.json") as fp:
+        res=json.load(fp)
+    branch_name=res[branch]
+    subjects={}
+
+    for usn in branch_name:
+        for subs in branch_name[usn]["Subjects"]:
+            if subs not in subjects:
+                subjects[subs]=branch_name[usn]["Subjects"][subs]["SubjectName"]
     grade_studs={}
     for sub,name in subjects.items():
         grade_studs[name]={}
     for sub,name in subjects.items():
         for usn in branch_name:
             try:
-                if branch_name[usn]["Subjects"][sub]["GradeLetter"]=="F":
+                if branch_name[usn]["Subjects"][sub]["GradeLetter"]==grade:
                     grade_studs[name][branch_name[usn]["Name"]]={}
                     grade_studs[name][branch_name[usn]["Name"]]["Total"]=branch_name[usn]["Subjects"][sub]["Total"]
                     grade_studs[name][branch_name[usn]["Name"]]["Internal"]=branch_name[usn]["Subjects"][sub]["Internal"]
@@ -36,6 +48,18 @@ def studGrade(request):
     return render(request,"gradestats.html",{'gradestats':grade_studs,'subjects':subjects})
 
 def classStats(request):
+    branch=request.GET["branch"]
+    year=request.GET["year"]
+    with open("templates/20"+year+"batch.json") as fp:
+        res=json.load(fp)
+    branch_name=res[branch]
+    subjects={}
+
+    for usn in branch_name:
+        for subs in branch_name[usn]["Subjects"]:
+            if subs not in subjects:
+                subjects[subs]=branch_name[usn]["Subjects"][subs]["SubjectName"]
+
     stats={}
     sub_dict={}
     sub_stats={}
@@ -89,6 +113,16 @@ def classStats(request):
     return render(request,"classstats.html",{'sub_stats':sub_stats,'subjects':subjects})
 
 def branchStats(request):
+    year=request.GET["year"]
+    with open("templates/20"+year+"batch.json") as fp:
+        res=json.load(fp)
+    branch_name=res["cs"]
+    subjects={}
+
+    for usn in branch_name:
+        for subs in branch_name[usn]["Subjects"]:
+            if subs not in subjects:
+                subjects[subs]=branch_name[usn]["Subjects"][subs]["SubjectName"]
     branchtuple=[]
     tableDict={}
     rankdict={}

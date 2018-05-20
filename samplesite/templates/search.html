@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">VTU Results</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a id="home" class="nav-link">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="extract" class="nav-link">Extract Results</a>
+                </li>
+                <li class="nav-item">
+                    <a id="search" class="nav-link">Search Results</a>
+                </li>
+                <li class="nav-item">
+                    <a id="stats" class="nav-link">Result Statistics</a>
+                </li>
+                <li class="nav-item">
+                    <a id="api" class="nav-link">API</a>
+                </li>
+            </ul>
+            <span class="navbar-text">VTU Engineering Results</span>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="h1 text-center">Search by USN</div>
+        <table class="table mt-4 table-bordered table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="text-center">Enter USN</th>
+                    <th class="text-center">Enter Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control mt-4" id="get-usn" placeholder="Ex:1mv15is001">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label for="type"></label>
+                            <select class="form-control" name="type" id="get-type">
+                                <option>Type:</option>
+                                <option>Regular</option>
+                                <option>Reval</option>
+                                <option>Updated Result</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <button id="fetchusn" type="button" class="btn btn-primary">Fetch Result</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <div class="h1 text-center">Search by branch</div>
+        <table class="table mt-4 table-bordered table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="text-center">Enter Year</th>
+                    <th class="text-center">Enter Branch</th>
+                    <th class="text-center">Enter Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label for="year"></label>
+                            <select class="form-control" name="year" id="select-year">
+                                <option>Year:</option>
+                                <option>17</option>
+                                <option>16</option>
+                                <option>15</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label for="year"></label>
+                            <select class="form-control" name="year" id="select-branch">
+                                <option>Enter branch</option>
+                                <option>CS</option>
+                                <option>IS</option>
+                                <option>EC</option>
+                                <option>TE</option>
+                                <option>ME</option>
+                                <option>CV</option>
+                                <option>BT</option>
+                                <option>IM</option>
+                                <option>ALL</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label for="type"></label>
+                            <select class="form-control" name="type" id="select-type">
+                                <option>Type:</option>
+                                <option>Reval</option>
+                                <option>Regular</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <button id="fetch" type="button" class="btn btn-primary">Fetch Result</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+    $("#fetchusn").on("click", function (e) {
+        e.preventDefault()
+        var usn = $("#get-usn").val();
+        var type = $("#get-type").val();
+        console.log(usn, type)
+        if (type == "Regular") {
+            window.location = "/student/" + usn;
+
+        } else if (type == "Reval") {
+            window.location = "/reval/" + usn;
+        } else {
+            window.location = "/student/" + usn + "/new";
+        }
+    });
+    $("#fetch").on("click", function () {
+        var branch = $("#select-branch").val().toLowerCase();
+        var type = $("#select-type").val();
+        var year = $("#select-year").val();
+        if (type == "Regular") {
+
+            window.location = "/classresults/" + branch + "?year=" + year;
+        } else {
+            window.location = "/classreval/" + branch + "?year=" + year;
+        }
+    });
+    $(document).on("click", "#home", function () {
+        window.location = "/";
+    });
+    $(document).on("click", "#extract", function () {
+        window.location = "/getresults/";
+    });
+    $(document).on("click", "#api", function () {
+        window.location = "/api/";
+    });
+    $(document).on("click", "#search", function () {
+        window.location = "/searchpage/";
+    });
+    $(document).on("click", "#stats", function () {
+        window.location = "/statspage/";
+    });
+</script>
+
+</html>

@@ -5,8 +5,6 @@
     <title>Title</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
@@ -42,28 +40,65 @@
             <span class="navbar-text">VTU Engineering Results</span>
         </div>
     </nav>
-    <div id="body"></div>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <div class="container">
+        <div class="h1 text-center mt-4">Results API</div>
+        <table class="table mt-4 table-bordered table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="text-center">Enter Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label for="year"></label>
+                            <select class="form-control" name="year" id="select-year">
+                                <option>Year:</option>
+                                <option>17</option>
+                                <option>16</option>
+                                <option>15</option>
+                            </select>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <button id="fetch" type="button" class="btn btn-primary">Fetch JSON</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script>
+        $(document).on("click", "#fetch", function () {
+            year=$("#select-year").val()
+            window.location = "/json/?year="+year;
+        });
+        $(document).on("click", "#home", function () {
+            window.location = "/";
+        });
+        $(document).on("click", "#extract", function () {
+            window.location = "/getresults/";
+        });
+        $(document).on("click", "#api", function () {
+            window.location = "/api/";
+        });
+        $(document).on("click", "#search", function () {
+            window.location = "/searchpage/";
+        });
+        $(document).on("click", "#stats", function () {
+            window.location = "/statspage/";
+        });
+    </script>
 </body>
-<script>
-    jQuery.get("/home/",
-        function (data) {
-            $("#body").html(data)
-        }
-    );
-    $(document).on("click", "#home", function () {
-        $("#body").load("/home/");
-    });
-    $(document).on("click", "#extract", function () {
-        $("#body").load("/getresults/");
-    });
-    $(document).on("click", "#api", function () {
-        $("#body").load("/json/");
-    });
-</script>
 
 </html>
