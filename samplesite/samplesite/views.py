@@ -7,6 +7,12 @@ with open("templates/new2015batch.json","r") as fp:
 def index(request):
     return render(request,"index.html")
 
+def home(request):
+    return render(request,"home.html")
+
+def navbar(request):
+    return render(request,"navbar.html")
+
 def class_results(request,branch):
     if branch=='all':
         return render(request,'table.html',{'results':res,'all':'True'})
@@ -37,7 +43,7 @@ def random_number(request,max_rand=100):
     return HttpResponse(msg)
 
 def json_display(request):
-    return render(request,"data.json")
+    return render(request,"new2015batch.json")
 
 def display_reval(request,usn):
     with open("templates/reval2015batch.json","r") as fp:

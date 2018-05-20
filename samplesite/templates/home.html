@@ -6,43 +6,107 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
 </head>
+<style>
+    #title {
+        font-family: 'Titan One', cursive;
+        font-size: 60px;
+    }
+</style>
+
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">VTU Results</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Extract Results</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Search Results</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Result Statistics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">API</a>
-                </li>
-            </ul>
-            <span class="navbar-text">VTU Engineering Results</span>
-        </div>
-    </nav>
     <center>
-        <img src="https://image3.mouthshut.com/images/imagesp/925840362s.jpg" class="mt-4 img-fluid mx-auto" alt="Responsive image" style="width:30%">
+        <div id="title" class="h1 mt-4">VTU RESULTS</div>
     </center>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <div class="row">
+        <div class="col-md-6">
+            <center>
+                <img src="https://image3.mouthshut.com/images/imagesp/925840362s.jpg" class="img-fluid mx-auto" alt="Responsive image" style="width:60%">
+            </center>
+        </div>
+        <div class="col-md-6">
+            <center>
+                <div class="card mt-4 border-dark" style="width: 85%;margin-top:5%">
+                    <div class="card-header text-white bg-dark ">
+                        Features
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-justify">
+                            <span>
+                                <img src="http://results.vtu.ac.in/images/arrow.gif" alt="arrow" style="height:10px;width:20px;">
+                            </span> Extract real time VTU Results at any time</li>
+                        <li class="list-group-item text-justify">
+                            <span>
+                                <img src="http://results.vtu.ac.in/images/arrow.gif" alt="arrow" style="height:10px;width:20px;">
+                            </span> Search for students results branch wise,semester wise or of a particular student</li>
+                        <li class="list-group-item text-justify">
+                            <span>
+                                <img src="http://results.vtu.ac.in/images/arrow.gif" alt="arrow" style="height:10px;width:20px;">
+                            </span> View statistical information of the student's results and evaluate performance</li>
+                        <li class="list-group-item text-justify">
+                            <span>
+                                <img src="http://results.vtu.ac.in/images/arrow.gif" alt="arrow" style="height:10px;width:20px;">
+                            </span> Compare branch performances by viewing stats</li>
+                        <li class="list-group-item text-justify">
+                            <span>
+                                <img src="http://results.vtu.ac.in/images/arrow.gif" alt="arrow" style="height:10px;width:20px;">
+                            </span> Compare subject performances by viewing stats</li>
+                        <li class="list-group-item text-justify">
+                            <span>
+                                <img src="http://results.vtu.ac.in/images/arrow.gif" alt="arrow" style="height:10px;width:20px;">
+                            </span> Compare semester performances by viewing stats</li>
+                    </ul>
+                </div>
+            </center>
+        </div>
+    </div>
+    <footer class="page-footer font-small bg-dark pt-4 mt-4">
+
+        <!--Footer Links-->
+        <div class="container-fluid text-center text-md-left">
+            <div class="row">
+
+                <!--First column-->
+                <div class="col-md-6">
+                    <h5 class="text-uppercase">NOTE</h5>
+                    <p>All results are obtained from the official VTU site and we are not responsible for the mistakes in the
+                        results.</p>
+                </div>
+                <!--/.First column-->
+
+                <!--Second column-->
+                <div class="col-md-6">
+                    <h5 class="text-uppercase">Contributions</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            Aishwarya D
+                        </li>
+                        <li>
+                            Nithin N
+                        </li>
+                        <li>
+                            Yash Kumar
+                        </li>
+                    </ul>
+                </div>
+                <!--/.Second column-->
+            </div>
+        </div>
+        <!--/.Footer Links-->
+
+        <!--Copyright-->
+        <div class="footer-copyright py-3 text-center">
+            © 2018 Copyright:
+            <a href="https://mdbootstrap.com/material-design-for-bootstrap/"> VTUResults.com </a>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
