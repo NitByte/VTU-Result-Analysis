@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+    <style>
+        table.table-bordered {
+            border: 1px solid #343a40;
+            margin-top: 20px;
+        }
+
+        table.table-bordered>thead>tr>th {
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -45,14 +55,14 @@
     <div class="container mt-4">
         <div class="h1 text-center">Search by USN</div>
         <table class="table mt-4 table-bordered table-hover">
-            <thead class="thead-inverse">
+            <thead class="thead-inverse bg-dark white-text">
                 <tr>
                     <th class="text-center">Enter USN</th>
                     <th class="text-center">Enter Type</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="grey lighten-2">
                     <td>
                         <div class="form-group">
                             <input type="text" class="form-control mt-4" id="get-usn" placeholder="Ex:1mv15is001">
@@ -70,7 +80,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="bg-dark">
                     <td colspan="2" class="text-center">
                         <button id="fetchusn" type="button" class="btn btn-primary">Fetch Result</button>
                     </td>
@@ -81,7 +91,7 @@
     <div class="container">
         <div class="h1 text-center">Search by branch</div>
         <table class="table mt-4 table-bordered table-hover">
-            <thead class="thead-inverse">
+            <thead class="thead-inverse bg-dark white-text">
                 <tr>
                     <th class="text-center">Enter Year</th>
                     <th class="text-center">Enter Branch</th>
@@ -89,7 +99,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="grey lighten-2">
+
                     <td>
                         <div class="form-group">
                             <label for="year"></label>
@@ -129,7 +140,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="bg-dark">
                     <td colspan="3" class="text-center">
                         <button id="fetch" type="button" class="btn btn-primary">Fetch Result</button>
                     </td>

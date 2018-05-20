@@ -9,6 +9,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+    <style>
+        table.table-bordered {
+            border: 1px solid #343a40;
+            margin-top: 20px;
+        }
+
+        table.table-bordered>thead>tr>th {
+            border: 1px solid #343a40;
+        }
+
+        table.table-bordered>tbody>tr>td {
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -44,7 +58,7 @@
     <div class="container mt-4">
         <div class="h1 text-center">Subject Statistics</div>
         <table class="table mt-4 table-bordered table-hover">
-            <thead class="thead-inverse">
+            <thead class="thead-inverse bg-dark white-text">
                 <tr>
                     <th class="text-center">Enter Branch</th>
                     <th class="text-center">Enter Year</th>
@@ -53,7 +67,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="grey lighten-2">
                     <td>
                         <div class="form-group">
                             <label for="year"></label>
@@ -100,7 +114,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="bg-dark">
                     <td colspan="3" class="text-center">
                         <button id="fetch" type="button" class="btn btn-primary"> Submit</button>
                     </td>
@@ -115,7 +129,7 @@
     <div class="container">
         <div class="h1 text-center">Class Statistics</div>
         <table class="table mt-4 table-bordered table-hover">
-            <thead class="thead-inverse">
+            <thead class="thead-inverse bg-dark white-text">
                 <tr>
                     <th class="text-center">Enter Branch</th>
                     <th class="text-center">Enter Year</th>
@@ -123,7 +137,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="grey lighten-2">
                     <td>
                         <div class="form-group">
                             <label for="year"></label>
@@ -155,7 +169,7 @@
                     </td>
 
                 </tr>
-                <tr>
+                <tr class="bg-dark">
                     <td colspan="3" class="text-center">
                         <button id="fetch1" type="button" class="btn btn-primary"> Submit</button>
                     </td>
@@ -169,14 +183,14 @@
     <div class="container">
         <div class="h1 text-center">Branch Statistics</div>
         <table class="table mt-4 table-bordered table-hover">
-            <thead class="thead-inverse">
+            <thead class="thead-inverse bg-dark white-text">
                 <tr>
                     <th class="text-center">Enter Year</th>
 
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="grey lighten-2">
 
                     <td>
                         <div class="form-group">
@@ -192,7 +206,7 @@
                     </td>
 
                 </tr>
-                <tr>
+                <tr class="bg-dark">
                     <td colspan="3" class="text-center">
                         <button id="fetch2" type="button" class="btn btn-primary"> Submit</button>
                     </td>
