@@ -10,6 +10,9 @@
         crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
     <style>
+        body{
+            background-color:#bcbcbc
+        }
         table.table-bordered {
             border: 1px solid #343a40;
             margin-top: 20px;
@@ -55,7 +58,7 @@
             <span class="navbar-text">VTU Engineering Results</span>
         </div>
     </nav>
-    <div class="container mt-4">
+    <div class="container mt-4 body">
         <div class="h1 text-center">Subject Statistics</div>
         <table class="table mt-4 table-bordered table-hover">
             <thead class="thead-inverse bg-dark white-text">
@@ -216,7 +219,7 @@
         </table>
 
     </div>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -229,21 +232,33 @@
         var branch = $("#select-branch").val().toLowerCase();
         var year = $("#select-year").val();
         var grade = $("#select-grade").val();
-        console.log(grade)
-        window.location = ("/stats/studgrade" + "?branch=" + branch + "&year=" + year + "&grade=" +
+        if(grade=="Grade"||year=="Year"||branch=="enter branch"){
+            swal({title:'Invalid data',icon:'error'});
+        }else{
+            window.location = ("/stats/studgrade" + "?branch=" + branch + "&year=" + year + "&grade=" +
             encodeURIComponent(grade));
+        }
     });
 
     $("#fetch1").on("click", function () {
         var branch = $("#select-branch1").val().toLowerCase();
         var year = $("#select-year1").val();
-
-        window.location = "/stats/classstats" + "?branch=" + branch + "&year=" + year;
+        if(year=="Year"||branch=="enter branch"){
+            swal({title:'Invalid data',icon:'error'});
+        }
+        else{
+            window.location = "/stats/classstats" + "?branch=" + branch + "&year=" + year;
+        }
     });
 
     $("#fetch2").on("click", function () {
         var year = $("#select-year2").val();
-        window.location = "/stats/branchstats" + "?year=" + year;
+        if(year=="Year:"){
+            swal({title:'Invalid data',icon:'error'});
+        }
+        else{
+            window.location = "/stats/branchstats" + "?year=" + year;
+        }
     });
     $(document).on("click", "#home", function () {
         window.location = "/";

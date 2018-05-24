@@ -9,8 +9,13 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #bcbcbc
+        }
+
         table.table-bordered {
             border: 1px solid #343a40;
             margin-top: 20px;
@@ -116,7 +121,7 @@
                         <div class="form-group">
                             <label for="year"></label>
                             <select class="form-control" name="year" id="select-branch">
-                                <option>Enter branch</option>
+                                <option>Branch:</option>
                                 <option>CS</option>
                                 <option>IS</option>
                                 <option>EC</option>
@@ -149,7 +154,7 @@
         </table>
 
     </div>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -157,29 +162,40 @@
         crossorigin="anonymous"></script>
 </body>
 <script>
+    var isAlpha = function(ch){
+        return /^[A-Z]$/i.test(ch);  
+    }
     $("#fetchusn").on("click", function (e) {
         e.preventDefault()
         var usn = $("#get-usn").val();
         var type = $("#get-type").val();
-        console.log(usn, type)
-        if (type == "Regular") {
-            window.location = "/student/" + usn;
+        console.log(usn.length)
+        if(usn.length!=10||!$.isNumeric(usn[0])||!isAlpha(usn[1])||!isAlpha(usn[2])||!$.isNumeric(usn[3])||!$.isNumeric(usn[4])||!isAlpha(usn[5])||!isAlpha(usn[6])||!$.isNumeric(usn[7])||!$.isNumeric(usn[8])||!$.isNumeric(usn[9])){
+            swal({title:'Invalid USN',icon:'error'});
+        }else{ 
+            if(type == "Regular") {
+                window.location = "/student/" + usn;
 
-        } else if (type == "Reval") {
-            window.location = "/reval/" + usn;
-        } else {
-            window.location = "/student/" + usn + "/new";
-        }
+            } else if (type == "Reval") {
+                window.location = "/reval/" + usn;
+            } else {
+                window.location = "/student/" + usn + "/new";
+            }
+    }
     });
     $("#fetch").on("click", function () {
         var branch = $("#select-branch").val().toLowerCase();
         var type = $("#select-type").val();
         var year = $("#select-year").val();
-        if (type == "Regular") {
+        if(type=="Type:"||year=="Year:"||branch=="branch:"){
+            swal({title:'Invalid data',icon:'error'});
+        }else{
+            if (type == "Regular") {
 
-            window.location = "/classresults/" + branch + "?year=" + year;
-        } else {
-            window.location = "/classreval/" + branch + "?year=" + year;
+                window.location = "/classresults/" + branch + "?year=" + year;
+            } else {
+                window.location = "/classreval/" + branch + "?year=" + year;
+            }
         }
     });
     $(document).on("click", "#home", function () {

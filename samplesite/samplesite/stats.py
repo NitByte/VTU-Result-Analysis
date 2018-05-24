@@ -5,26 +5,15 @@ from tabulate import tabulate
 import operator
 from django.shortcuts import HttpResponse,render
 
-# with open("templates/2015batch.json") as fp:
-#     res=json.load(fp)
-# branch_name=res["cs"]
-# subjects={}
-
-# for usn in branch_name:
-#     for subs in branch_name[usn]["Subjects"]:
-#         if subs not in subjects:
-#             subjects[subs]=branch_name[usn]["Subjects"][subs]["SubjectName"]
-
 def studGrade(request):
     branch=request.GET["branch"]
     year=request.GET["year"]
     grade=request.GET["grade"]
-    print(grade)
-    with open("templates/20"+year+"batch.json") as fp:
+    with open("templates/new20"+year+"batch.json") as fp:
         res=json.load(fp)
     branch_name=res[branch]
     subjects={}
-
+    count={}
     for usn in branch_name:
         for subs in branch_name[usn]["Subjects"]:
             if subs not in subjects:
@@ -41,16 +30,18 @@ def studGrade(request):
                     grade_studs[name][branch_name[usn]["Name"]]["Internal"]=branch_name[usn]["Subjects"][sub]["Internal"]
                     grade_studs[name][branch_name[usn]["Name"]]["External"]=branch_name[usn]["Subjects"][sub]["External"]
                     grade_studs[name][branch_name[usn]["Name"]]["GradePoints"]=branch_name[usn]["Subjects"][sub]["GradePoints"]
-                    grade_studs[name][branch_name[usn]["Name"]]["GradeLetter"]=branch_name[usn]["Subjects"][sub]["GradeLetter"]
-                    
+                    grade_studs[name][branch_name[usn]["Name"]]["GradeLetter"]=branch_name[usn]["Subjects"][sub]["GradeLetter"]                 
             except:
                 pass
-    return render(request,"gradestats.html",{'gradestats':grade_studs,'subjects':subjects})
+    for sub in grade_studs:
+        count[sub]=len(grade_studs[sub])
+    print(count)
+    return render(request,"gradestats.html",{'gradestats':grade_studs,'subjects':subjects,'count':count})
 
 def classStats(request):
     branch=request.GET["branch"]
     year=request.GET["year"]
-    with open("templates/20"+year+"batch.json") as fp:
+    with open("templates/new20"+year+"batch.json") as fp:
         res=json.load(fp)
     branch_name=res[branch]
     subjects={}
@@ -85,8 +76,6 @@ def classStats(request):
     df=df[columns].astype('float32')
     df["Name"]=s
     df["SGPA"]=c
-    print(stats)
-    print(df)
 
     sub_stats["Average"]={}
     sub_stats["Count"]={}
@@ -104,17 +93,22 @@ def classStats(request):
         sub_stats["Maximum"][sub]=df[sub].max()
         sub_stats["Minimun"][sub]=df[sub].min()
         sub_stats["Quantile"][sub]=df[sub].quantile()
-        sub_stats["StandardDeviation"][sub]=round(df[sub].std(),2)
-        sub_stats["Variance"][sub]=round(df[sub].var(),2)
+        if sub_stats["Count"][sub]!=1:
+            sub_stats["StandardDeviation"][sub]=round(df[sub].std(),2)
+        else:
+            sub_stats["StandardDeviation"][sub]=0
+        if sub_stats["Count"][sub]!=1:
+            sub_stats["Variance"][sub]=round(df[sub].var(),2)
+        else:
+            sub_stats["Variance"][sub]=0
         sub_stats["Fails"][sub]=sub_dict[sub].count('F')
         sub_stats["Pass%"][sub]=round(((len(sub_dict[sub])-sub_dict[sub].count('F'))/len(sub_dict[sub]))*100,2)
         sub_stats["Above90"][sub]=sub_dict[sub].count('S+')     
-    # print(sub_stats)
     return render(request,"classstats.html",{'sub_stats':sub_stats,'subjects':subjects})
 
 def branchStats(request):
     year=request.GET["year"]
-    with open("templates/20"+year+"batch.json") as fp:
+    with open("templates/new20"+year+"batch.json") as fp:
         res=json.load(fp)
     branch_name=res["cs"]
     subjects={}
@@ -169,13 +163,9 @@ def branchStats(request):
         branchStats["Below 4 SGPA"][branch]=len([x for x in tableDict["CGPAS"][branch] if float(x) <=4.0])
         branchStats["Pass%"][branch]=round(((totalStuds-fail)/totalStuds)*100,2)
     ranktuple=sorted(ranks.items(),key=operator.itemgetter(1),reverse=True)
-    print(ranktuple)
     for rank,tup in enumerate(ranktuple):
         rankdict[tup[0]]=rank+1
     for branch in branchtuple:
         branchStats["Branch Rank"][branch]=rankdict[branch]
-    # df=pd.DataFrame(branchStats).transpose()
-    # print(tabulate(df,headers=list(df.columns), numalign="left", tablefmt="fancy_grid"))
-    print(rankdict)
     return render(request,'branchstats.html',{"branchStats":branchStats})
 

@@ -52,6 +52,7 @@ def fetch_result(request):
         return sgpa
 
     def regular():
+        i=0
         backlog={'17':'1','16':'3','15':'5'}
         def form_df(usn,branch):
             headers={}
@@ -64,6 +65,7 @@ def fetch_result(request):
             try:
                 if soup.find("div",attrs={'style':"text-align:center;padding:5px;"}).b.text.split(":")[-1].strip()==backlog[year]:
                     table=soup.find("div","divTable")
+                    i+=1
                     rows=table.find_all('div',class_="divTableRow")
                     table=[]
                     for row in rows:
@@ -257,6 +259,6 @@ def fetch_result(request):
         reval()
         update()
 
-    return HttpResponse("Fetch Complete")
+    return HttpResponse("Fetched "+i+" results")
 
     

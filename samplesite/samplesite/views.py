@@ -29,18 +29,22 @@ def class_results(request,branch):
 
 def result(request,usn):
     year=usn[3:5]
-    with open("templates/new20"+year+"batch.json","r") as fp:
-        res=json.load(fp)
-    branch=usn[5:7]
-    usn_dict=res[branch][usn]
-    sub_dict={}
-    for sub in res[branch][usn]["Subjects"]:
-        sub_dict[sub]={}
-        for key,value in res[branch][usn]["Subjects"][sub].items():
-            key=key.replace(" ","")
-            sub_dict[sub][key]=value
-    usn_dict["Subjects"]=sub_dict
-    return render(request,'result.html',{'results':usn_dict})
+    try:
+        with open("templates/new20"+year+"batch.json","r") as fp:
+            res=json.load(fp)
+        
+        branch=usn[5:7]
+        usn_dict=res[branch][usn]
+        sub_dict={}
+        for sub in res[branch][usn]["Subjects"]:
+            sub_dict[sub]={}
+            for key,value in res[branch][usn]["Subjects"][sub].items():
+                key=key.replace(" ","")
+                sub_dict[sub][key]=value
+        usn_dict["Subjects"]=sub_dict
+        return render(request,'result.html',{'results':usn_dict})
+    except:
+        return render(request,'error.html')
 
 def hello_world(request):
     return HttpResponse("Hello World")
@@ -102,18 +106,21 @@ def display_allreval(request,branch):
 
 def after_reval(request,usn):
     year=usn[3:5]
-    with open("templates/new20"+year+"batch.json","r") as fp:
-        res=json.load(fp)
-    branch=usn[5:7]
-    usn_dict=res[branch][usn]
-    sub_dict={}
-    for sub in res[branch][usn]["Subjects"]:
-        sub_dict[sub]={}
-        for key,value in res[branch][usn]["Subjects"][sub].items():
-            key=key.replace(" ","")
-            sub_dict[sub][key]=value
-    usn_dict["Subjects"]=sub_dict
-    return render(request,'afterreval.html',{'results':usn_dict})
+    try:
+        with open("templates/new20"+year+"batch.json","r") as fp:
+            res=json.load(fp)
+        branch=usn[5:7]
+        usn_dict=res[branch][usn]
+        sub_dict={}
+        for sub in res[branch][usn]["Subjects"]:
+            sub_dict[sub]={}
+            for key,value in res[branch][usn]["Subjects"][sub].items():
+                key=key.replace(" ","")
+                sub_dict[sub][key]=value
+        usn_dict["Subjects"]=sub_dict
+        return render(request,'afterreval.html',{'results':usn_dict})
+    except:
+        return render(request,'error.html')
 
 
 

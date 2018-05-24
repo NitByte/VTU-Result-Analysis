@@ -1,7 +1,7 @@
 
 import json
 
-with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new2017batch.json","r") as fs:
+with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new2016batch.json","r") as fs:
     res=json.load(fs)
 
 class_ranks={}
@@ -29,7 +29,7 @@ for branch in res:
     for usn in res[branch]:
         res[branch][usn]["ClassRank"]=str(class_ranks[usn])
         res[branch][usn]["SemRank"]=str(sem_ranks[usn])
-with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new2017batch.json","w") as kp:
+with open("/media/nithin/E:/Project/djangosam/samplesite/templates/new2016batch.json","w") as kp:
     json.dump(res,kp)
 
         
