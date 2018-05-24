@@ -13,7 +13,6 @@ def fetch_result(request):
     types=request.GET['type']
     print(year,types)
     result={}
-    
     def assign_ranks(d):
         all_ranks={}
         for branch in d:
@@ -55,6 +54,7 @@ def fetch_result(request):
         i=0
         backlog={'17':'1','16':'3','15':'5'}
         def form_df(usn,branch):
+            i=0
             headers={}
             headers['User-Agent']='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36'
             payload={'lns':usn}
@@ -91,41 +91,42 @@ def fetch_result(request):
                     pass
             except:
                 pass
+            return i
 
         for branch in branches:
             result[branch]={}
             if branch not in ["cs","me","ec","ee"]:
                 for num in range(1,70):
                     usn=base_usn+year+branch+str(num).zfill(3)
-                    form_df(usn,branch)
+                    i+=form_df(usn,branch)
 
                 for num in range(1,70):
                     usn=base_usn+str(int(year)-1)+branch+str(num).zfill(3)
-                    form_df(usn,branch)
+                    i+=form_df(usn,branch)
 
                 for num in range(400,420):
                     usn=base_usn+str(int(year)+1)+branch+str(num)
-                    form_df(usn,branch)
+                    i+=form_df(usn,branch)
 
                 for num in range(400,420):
                     usn=base_usn+str(int(year))+branch+str(num)
-                    form_df(usn,branch) 
+                    i+=form_df(usn,branch) 
             else:
                 for num in range(1,160):
                     usn=base_usn+year+branch+str(num).zfill(3)
-                    form_df(usn,branch)
+                    i+=form_df(usn,branch)
 
                 for num in range(1,160):
                     usn=base_usn+str(int(year)-1)+branch+str(num).zfill(3)
-                    form_df(usn,branch)
+                    i+=form_df(usn,branch)
 
                 for num in range(400,440):
                     usn=base_usn+str(int(year)+1)+branch+str(num)
-                    form_df(usn,branch)
+                    i+=form_df(usn,branch)
 
                 for num in range(400,440):
                     usn=base_usn+str(int(year))+branch+str(num)
-                    form_df(usn,branch) 
+                    i+=form_df(usn,branch) 
 
         for branch in result:
             for usn in result[branch]:
@@ -157,6 +158,7 @@ def fetch_result(request):
                 result[branch][usn]["Rank"]=all_rank[usn]
         with open("templates/20"+year+"batch.json","w+") as fp:
             json.dump(result,fp)
+        return i
 
     def update():
         with open("templates/20"+year+"batch.json", "r") as fp:
@@ -207,12 +209,11 @@ def fetch_result(request):
     def reval():
         with open("templates/20"+year+"batch.json") as js:
             res=json.load(js)
-
+        i=0
         sub_reval={}
         url="http://results.vtu.ac.in/vitavirevalresultcbcs/resultpage.php"
         headers={}
         headers['User-Agent']='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36'
-        i=0
         for branch in res:
             sub_reval[branch]={}
             for usns in res[branch]:  
@@ -253,12 +254,13 @@ def fetch_result(request):
                     pass
         with open("templates/reval20"+year+"batch.json",'w+') as fp:
             json.dump(sub_reval,fp)
+        return i
     if types=='Regular':
-        regular()
+        i=regular()
     else:
-        reval()
+        i=reval()
         update()
 
-    return HttpResponse("Fetched "+i+" results")
+    return HttpResponse("Fetched "+str(i)+" results")
 
     
