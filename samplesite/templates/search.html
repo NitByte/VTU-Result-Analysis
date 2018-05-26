@@ -172,6 +172,8 @@
         console.log(usn.length)
         if(usn.length!=10||!$.isNumeric(usn[0])||!isAlpha(usn[1])||!isAlpha(usn[2])||!$.isNumeric(usn[3])||!$.isNumeric(usn[4])||!isAlpha(usn[5])||!isAlpha(usn[6])||!$.isNumeric(usn[7])||!$.isNumeric(usn[8])||!$.isNumeric(usn[9])){
             swal({title:'Invalid USN',icon:'error'});
+        }else if(type=="Type:"){
+            swal({title:'Invalid data',icon:'error'});
         }else{ 
             if(type == "Regular") {
                 window.location = "/student/" + usn;
